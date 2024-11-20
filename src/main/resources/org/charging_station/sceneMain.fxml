@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -153,44 +152,23 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="COM" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" />
-                                       </VBox.margin>
-                                    </Text>
-                                    <ComboBox fx:id="comPortChoice" minWidth="250.0" promptText="Выберите" styleClass="default" stylesheets="@MyButtonStyle.css">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </ComboBox>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                                 <children>
-                                    <Text fx:id="comConnectionStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Не подключено" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="10.0" />
-                                       </VBox.margin>
-                                    </Text>
-                                    <Button fx:id="comConnectButton" alignment="CENTER" focusTraversable="false" minWidth="250.0" mnemonicParsing="false" styleClass="default" stylesheets="@MyButtonStyle.css" text="Подключиться" />
-                                 </children>
-                              </VBox>
+                              <ComboBox fx:id="comPortChoice" minWidth="250.0" promptText="Выберите COM-порт" styleClass="default" stylesheets="@MyButtonStyle.css" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </ComboBox>
+                              <ToggleButton fx:id="comConnectButton" minWidth="250.0" mnemonicParsing="false" onAction="#onComConnectButtonPress" styleClass="stop" stylesheets="@MyButtonStyle.css" text="Не подключено" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
                      </children>
                   </GridPane>
-                  <TextArea fx:id="resultTextField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                  <TextArea fx:id="resultTextField" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
                   </TextArea>
                </children>
             </GridPane>

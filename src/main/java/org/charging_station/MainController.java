@@ -19,7 +19,7 @@ public class MainController implements Initializable {
     private GridPane background;
 
     @FXML
-    private Button comConnectButton;
+    private ToggleButton comConnectButton;
 
     @FXML
     private Text comConnectionStatus;
@@ -60,12 +60,33 @@ public class MainController implements Initializable {
             ((ToggleButton) event.getSource()).getStyleClass().remove("start");
             ((ToggleButton) event.getSource()).getStyleClass().add("stop");
             ((ToggleButton) event.getSource()).setText("Стоп");
+            resultTextField.appendText("Стоп\r\n");
             start = true;
         } else {
             ((ToggleButton) event.getSource()).getStyleClass().remove("stop");
             ((ToggleButton) event.getSource()).getStyleClass().add("start");
-            ((ToggleButton) event.getSource()).setText("Старт");
+            resultTextField.appendText("Старт\r\n");
             start = false;
+        }
+    }
+
+    boolean connect = false;
+
+    @FXML
+    void onComConnectButtonPress(ActionEvent event) {
+
+        if (((ToggleButton) event.getSource()).getStyleClass().contains("start")) {
+            ((ToggleButton) event.getSource()).getStyleClass().remove("start");
+            ((ToggleButton) event.getSource()).getStyleClass().add("stop");
+            ((ToggleButton) event.getSource()).setText("Не подключено");
+            resultTextField.appendText("Не подключеное\r\n");
+            connect = true;
+        } else {
+            ((ToggleButton) event.getSource()).getStyleClass().remove("stop");
+            ((ToggleButton) event.getSource()).getStyleClass().add("start");
+            ((ToggleButton) event.getSource()).setText("Подключено");
+            resultTextField.appendText("Подключено\r\n");
+            connect = false;
         }
     }
 }
