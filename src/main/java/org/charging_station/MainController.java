@@ -1,5 +1,6 @@
 package org.charging_station;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -12,10 +13,10 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
     @FXML
-    private GridPane background;
+    private TextField argumentValue;
 
     @FXML
-    private ComboBox<String> comBaudrateChoice;
+    private GridPane background;
 
     @FXML
     private Button comConnectButton;
@@ -33,18 +34,38 @@ public class MainController implements Initializable {
     private TextField identifierValue;
 
     @FXML
+    private ComboBox<String> readWriteChoice;
+
+    @FXML
     private TextArea resultTextField;
+
+    @FXML
+    private ToggleButton startStopButton;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        comBaudrateChoice.getItems().removeAll(comBaudrateChoice.getItems());
-        comBaudrateChoice.getItems().addAll("2400", "4800", "9600", "19200", "38400", "57600", "74880", "115200", "230400", "230400");
-        comBaudrateChoice.getSelectionModel().select("Бодрейт");
+        readWriteChoice.getItems().removeAll(readWriteChoice.getItems());
+        readWriteChoice.getItems().addAll("Чтение", "Запись");
+        readWriteChoice.getSelectionModel().select("Выберите");
+    }
 
-        functionChoice.getItems().removeAll(functionChoice.getItems());
-        functionChoice.getItems().addAll("Читать", "Писать", "Старт/Стоп");
-        functionChoice.getSelectionModel().select("Выберите");
+    boolean start = false;
+
+    @FXML
+    void onStartStopButtonPress(ActionEvent event) {
+
+        if (((ToggleButton) event.getSource()).getStyleClass().contains("start")) {
+            ((ToggleButton) event.getSource()).getStyleClass().remove("start");
+            ((ToggleButton) event.getSource()).getStyleClass().add("stop");
+            ((ToggleButton) event.getSource()).setText("Стоп");
+            start = true;
+        } else {
+            ((ToggleButton) event.getSource()).getStyleClass().remove("stop");
+            ((ToggleButton) event.getSource()).getStyleClass().add("start");
+            ((ToggleButton) event.getSource()).setText("Старт");
+            start = false;
+        }
     }
 }

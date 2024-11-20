@@ -5,10 +5,12 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -63,27 +65,72 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
-                        <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
                      </rowConstraints>
                      <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <GridPane>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Функция" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <ComboBox fx:id="functionChoice" minWidth="250.0" promptText="Выберите" styleClass="default" stylesheets="@MyButtonStyle.css">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </ComboBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Функция" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <ComboBox fx:id="functionChoice" minWidth="250.0" promptText="Выберите" styleClass="default" stylesheets="@MyButtonStyle.css">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </ComboBox>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Чтение/запись" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <ComboBox fx:id="readWriteChoice" minWidth="250.0" promptText="Чтение" styleClass="default" stylesheets="@MyButtonStyle.css">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </ComboBox>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Аргумент" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="15.0" />
+                                       </HBox.margin>
+                                    </Text>
+                                    <TextField fx:id="argumentValue" alignment="CENTER" minWidth="150.0" promptText="Введите" styleClass="default" stylesheets="@MyTextFieldStyle.css">
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <ToggleButton fx:id="startStopButton" minWidth="250.0" mnemonicParsing="false" onAction="#onStartStopButtonPress" styleClass="start" stylesheets="@MyButtonStyle.css" text="Старт" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                            </children>
-                        </VBox>
+                        </GridPane>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Идентификатор" textAlignment="CENTER">
@@ -99,48 +146,45 @@
                         </VBox>
                         <GridPane GridPane.rowIndex="2">
                           <columnConstraints>
-                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ComboBox fx:id="comPortChoice" minWidth="250.0" promptText="COM-порт" styleClass="default" stylesheets="@MyButtonStyle.css" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </ComboBox>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="COM" textAlignment="CENTER" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Baud rate" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <ComboBox fx:id="comBaudrateChoice" minWidth="250.0" promptText="Бодрейт" styleClass="default" stylesheets="@MyButtonStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                              </ComboBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="COM" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <ComboBox fx:id="comPortChoice" minWidth="250.0" promptText="Выберите" styleClass="default" stylesheets="@MyButtonStyle.css">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                    </ComboBox>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <children>
+                                    <Text fx:id="comConnectionStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Не подключено" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </Text>
+                                    <Button fx:id="comConnectButton" alignment="CENTER" focusTraversable="false" minWidth="250.0" mnemonicParsing="false" styleClass="default" stylesheets="@MyButtonStyle.css" text="Подключиться" />
+                                 </children>
+                              </VBox>
                            </children>
                         </GridPane>
-                        <Button fx:id="comConnectButton" alignment="CENTER" focusTraversable="false" minWidth="250.0" mnemonicParsing="false" styleClass="default" stylesheets="@MyButtonStyle.css" text="Подключиться" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                        <Text fx:id="comConnectionStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Не подключено" textAlignment="CENTER" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
                      </children>
                   </GridPane>
                   <TextArea fx:id="resultTextField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
