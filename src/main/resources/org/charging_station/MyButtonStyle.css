@@ -1,0 +1,26 @@
+.start {
+    -fx-background-radius: 20;
+    -fx-border-color: #008000;
+    -fx-border-width: 3;
+    -fx-border-radius: 20;
+    -fx-pref-height: 50;
+    -fx-pref-width: 175;
+    -fx-font-size: 18px;
+}
+
+.stop {
+    -fx-background-radius: 20;
+    -fx-border-color: #800033;
+    -fx-border-width: 3;
+    -fx-border-radius: 20;
+    -fx-pref-height: 50;
+    -fx-pref-width: 175;
+    -fx-font-size: 18px;
+}
+
+.default {
+    -fx-background-radius: 20;
+    -fx-pref-height: 50;
+    -fx-pref-width: 175;
+    -fx-font-size: 18px;
+}

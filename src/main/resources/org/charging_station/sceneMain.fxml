@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane fx:id="background" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="768.0" minWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.charging_station.MainController">
+   <columnConstraints>
+      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="1.7976931348623157E308" percentHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
+      <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="90.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+   </rowConstraints>
+   <children>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="100.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fitHeight="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@leti_logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="100.0" prefHeight="100.0" valignment="CENTER" vgrow="ALWAYS" />
+         </rowConstraints>
+         <children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <GridPane alignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                     <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                        <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Функция" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <ComboBox fx:id="functionChoice" minWidth="250.0" promptText="Выберите" styleClass="default" stylesheets="@MyButtonStyle.css">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </ComboBox>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Идентификатор" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <TextField fx:id="identifierValue" alignment="CENTER" minWidth="350.0" promptText="Введите" styleClass="default" stylesheets="@MyTextFieldStyle.css" />
+                           </children>
+                        </VBox>
+                        <GridPane GridPane.rowIndex="2">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ComboBox fx:id="comPortChoice" minWidth="250.0" promptText="COM-порт" styleClass="default" stylesheets="@MyButtonStyle.css" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </ComboBox>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="COM" textAlignment="CENTER" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="10.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Baud rate" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets bottom="10.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <ComboBox fx:id="comBaudrateChoice" minWidth="250.0" promptText="Бодрейт" styleClass="default" stylesheets="@MyButtonStyle.css" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </ComboBox>
+                           </children>
+                        </GridPane>
+                        <Button fx:id="comConnectButton" alignment="CENTER" focusTraversable="false" minWidth="250.0" mnemonicParsing="false" styleClass="default" stylesheets="@MyButtonStyle.css" text="Подключиться" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                        <Text fx:id="comConnectionStatus" strokeType="OUTSIDE" strokeWidth="0.0" text="Не подключено" textAlignment="CENTER" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </GridPane>
+                  <TextArea fx:id="resultTextField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextArea>
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>
