@@ -124,7 +124,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void onfunctionExecuteButtonPress(ActionEvent event) {
+    void onFunctionExecuteButtonPress(ActionEvent event) {
 
     }
 }

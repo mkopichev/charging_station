@@ -158,7 +158,7 @@
                                     <Insets bottom="10.0" />
                                  </VBox.margin>
                               </Text>
-                              <Button fx:id="functionExecuteButton" minWidth="250.0" mnemonicParsing="false" onAction="#onfunctionExecuteButtonPress" styleClass="default" stylesheets="@MyButtonStyle.css" text="Выполнить" />
+                              <Button fx:id="functionExecuteButton" minWidth="250.0" mnemonicParsing="false" onAction="#onFunctionExecuteButtonPress" styleClass="default" stylesheets="@MyButtonStyle.css" text="Выполнить" />
                            </children>
                         </VBox>
                      </children>
