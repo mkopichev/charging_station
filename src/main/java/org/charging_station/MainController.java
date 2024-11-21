@@ -103,7 +103,6 @@ public class MainController implements Initializable {
     public void log(String text) {
         resultTextField.appendText(text + "\n");
     }
-    boolean connect = false;
 
     void comChangedState(boolean state) {
         if(state) {
