@@ -1,5 +1,6 @@
 package org.charging_station;
 
+import com.fazecast.jSerialComm.SerialPort;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -71,7 +72,7 @@ public class MainApplication extends Application implements SerialInterface, But
             controller.log("Ошибка подключения COM");
             return;
         }
-        controller.log("Подключение к порту успешно");
+        controller.log("Подключение к порту " + SerialPort.getCommPort(com).getDescriptivePortName() + " успешно");
 
         serial.write("C\r");
         serial.write("S4\r");
@@ -79,7 +80,6 @@ public class MainApplication extends Application implements SerialInterface, But
 
         SlCan.checkVersion(serial, this);
 
-//        controller.log("Должно было произойти подключение к шине КАН на частоте 125кГц");
     }
 
     @Override

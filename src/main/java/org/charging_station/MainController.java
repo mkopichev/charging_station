@@ -98,7 +98,8 @@ public class MainController implements Initializable {
     }
 
     public void log(String text) {
-        resultTextField.appendText(text+"\n");
+        resultTextField.appendText(text + "\n");
+    }
     boolean connect = false;
 
     @FXML
