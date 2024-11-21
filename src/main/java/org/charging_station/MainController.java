@@ -1,6 +1,5 @@
 package org.charging_station;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -29,13 +28,13 @@ public class MainController implements Initializable {
     private ComboBox<String> comPortChoice;
 
     @FXML
-    private ComboBox<Charger.CHARGER_COMMANDS> functionChoice;
+    private ComboBox<Charger.ChargerCommand> functionChoice;
 
     @FXML
-    private TextField identifierValue;
+    private Button functionExecuteButton;
 
     @FXML
-    private ComboBox<String> readWriteChoice;
+    private ComboBox<Charger.ChargerOperation> readWriteChoice;
 
     @FXML
     private TextArea resultTextField;
@@ -51,14 +50,15 @@ public class MainController implements Initializable {
     }
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         readWriteChoice.getItems().removeAll(readWriteChoice.getItems());
-        readWriteChoice.getItems().addAll("Чтение", "Запись");
-        readWriteChoice.getSelectionModel().select("Выберите");
+        readWriteChoice.getItems().addAll(Charger.ChargerOperation.values());
+        readWriteChoice.getSelectionModel().select(0);
 
-        functionChoice.getItems().addAll(Charger.CHARGER_COMMANDS.values());
+        functionChoice.getItems().addAll(Charger.ChargerCommand.values());
 
         comPortChoice.showingProperty().addListener((observableValue, wasShowing, isShowing) -> {
             if (isShowing) {
@@ -73,51 +73,87 @@ public class MainController implements Initializable {
         });
 
         comConnectButton.setOnAction(actionEvent -> {
-            reactor.connectPressed(comPortChoice.getValue());
+            if(comConnectButton.isSelected())
+                reactor.connectPressed(comPortChoice.getValue());
+            else
+                reactor.disconnectPressed();
 
+        });
+
+        startStopButton.setOnAction(actionEvent -> {
+            if(startStopButton.isSelected()) {
+                reactor.startPressed();
+                startStopButton.setSelected(false);
+            }
+            else {
+                reactor.stopPressed();
+                startStopButton.setSelected(true);
+            }
+        });
+
+        functionExecuteButton.setOnAction(actionEvent -> {
+            if(functionChoice.getValue() == null) {
+                log("Не выбрана комманда");
+                return;
+            }
+            Integer argument = 0;
+            if(readWriteChoice.getValue() == Charger.ChargerOperation.WRITE) {
+                try {
+                    argument = Integer.parseInt(argumentValue.getText());
+                } catch (NumberFormatException e) {
+                    log("Недопустимое значение аргумента");
+                    return;
+                }
+                reactor.commandButtonPressed(functionChoice.getValue(), Charger.ChargerOperation.WRITE, argument);
+                return;
+            }
+
+            if(readWriteChoice.getValue() == Charger.ChargerOperation.READ) {
+                reactor.commandButtonPressed(functionChoice.getValue(), Charger.ChargerOperation.READ, 0);
+                return;
+            }
         });
     }
 
-    boolean start = false;
 
-    @FXML
-    void onStartStopButtonPress(ActionEvent event) {
-
-        if (((ToggleButton) event.getSource()).getStyleClass().contains("start")) {
-            ((ToggleButton) event.getSource()).getStyleClass().remove("start");
-            ((ToggleButton) event.getSource()).getStyleClass().add("stop");
-            ((ToggleButton) event.getSource()).setText("Стоп");
-            resultTextField.appendText("Стоп\r\n");
-            start = true;
+    void startStateChanged(boolean state) {
+        if(state) {
+            startStopButton.getStyleClass().remove("stop");
+            startStopButton.getStyleClass().remove("start");
+            startStopButton.getStyleClass().add("stop");
+            startStopButton.setText("Стоп");
+            startStopButton.setSelected(true);
         } else {
-            ((ToggleButton) event.getSource()).getStyleClass().remove("stop");
-            ((ToggleButton) event.getSource()).getStyleClass().add("start");
-            resultTextField.appendText("Старт\r\n");
-            start = false;
+            startStopButton.getStyleClass().remove("stop");
+            startStopButton.getStyleClass().remove("start");
+            startStopButton.getStyleClass().add("start");
+            startStopButton.setText("Старт");
+            startStopButton.setSelected(false);
         }
+
     }
 
     public void log(String text) {
         resultTextField.appendText(text + "\n");
     }
 
-    boolean connect = false;
-
-    @FXML
-    void onComConnectButtonPress(ActionEvent event) {
-
-        if (((ToggleButton) event.getSource()).getStyleClass().contains("start")) {
-            ((ToggleButton) event.getSource()).getStyleClass().remove("start");
-            ((ToggleButton) event.getSource()).getStyleClass().add("stop");
-            ((ToggleButton) event.getSource()).setText("Не подключено");
-            resultTextField.appendText("Не подключеное\r\n");
-            connect = true;
+    void comChangedState(boolean state) {
+        if(state) {
+            comConnectButton.getStyleClass().remove("stop");
+            comConnectButton.getStyleClass().remove("start");
+            comConnectButton.getStyleClass().add("start");
+            comConnectButton.setText("Подключено");
+            comConnectButton.setSelected(true);
+            comPortChoice.setDisable(true);
         } else {
-            ((ToggleButton) event.getSource()).getStyleClass().remove("stop");
-            ((ToggleButton) event.getSource()).getStyleClass().add("start");
-            ((ToggleButton) event.getSource()).setText("Подключено");
-            resultTextField.appendText("Подключено\r\n");
-            connect = false;
+            comConnectButton.getStyleClass().remove("stop");
+            comConnectButton.getStyleClass().remove("start");
+            comConnectButton.getStyleClass().add("stop");
+            comConnectButton.setText("Не подключено");
+            comConnectButton.setSelected(false);
+            comPortChoice.setDisable(false);
         }
+
     }
+
 }

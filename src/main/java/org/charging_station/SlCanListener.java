@@ -4,11 +4,9 @@ public interface SlCanListener {
 
     enum Request {
         VERSION_CHECK,
+        COMMAND,
         START,
-        STOP,
-        WRITE_VOLTAGE,
-        WRITE_CURRENT,
-        READ_SOMETHING
+        STOP
     }
 
     void responseAcquired(Request request, String response);

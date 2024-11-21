@@ -109,6 +109,11 @@ public class Serial {
     private int dataBits = 8;
     private String portName;
     private SerialPort port;
+
+    public SerialPortState getState() {
+        return state;
+    }
+
     private SerialPortState state = SerialPortState.DISCONNECTED;
 
     public void setParity(ParityOptions parity) {
@@ -163,6 +168,13 @@ public class Serial {
         }
         state = SerialPortState.DISCONNECTED;
         return -1;
+    }
+
+    public void disconnect() {
+        if(state == SerialPortState.CONNECTED) {
+            port.closePort();
+            state = SerialPortState.DISCONNECTED;
+        }
     }
 
     public int write(String data) {
