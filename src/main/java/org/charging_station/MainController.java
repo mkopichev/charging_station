@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -28,7 +29,7 @@ public class MainController implements Initializable {
     private ComboBox<String> comPortChoice;
 
     @FXML
-    private ComboBox<String> functionChoice;
+    private ComboBox<Charger.CHARGER_COMMANDS> functionChoice;
 
     @FXML
     private TextField identifierValue;
@@ -43,12 +44,38 @@ public class MainController implements Initializable {
     private ToggleButton startStopButton;
 
 
+    private ButtonReactor reactor;
+
+    public void setReactor(ButtonReactor reactor) {
+        this.reactor = reactor;
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         readWriteChoice.getItems().removeAll(readWriteChoice.getItems());
         readWriteChoice.getItems().addAll("Чтение", "Запись");
         readWriteChoice.getSelectionModel().select("Выберите");
+
+        functionChoice.getItems().addAll(Charger.CHARGER_COMMANDS.values());
+
+        comPortChoice.showingProperty().addListener((observableValue, wasShowing, isShowing) -> {
+            if(isShowing) {
+                ArrayList<String> vals = reactor.comPortsExpanded();
+                String oldVal = comPortChoice.getValue();
+                comPortChoice.getItems().clear();
+                comPortChoice.getItems().addAll(vals);
+                if(oldVal != null && vals.contains(oldVal)) {
+                    comPortChoice.getSelectionModel().select(oldVal);
+                }
+            }
+        });
+
+        comConnectButton.setOnAction(actionEvent -> {
+            reactor.connectPressed(comPortChoice.getValue());
+
+        });
     }
 
     boolean start = false;
@@ -67,5 +94,9 @@ public class MainController implements Initializable {
             ((ToggleButton) event.getSource()).setText("Старт");
             start = false;
         }
+    }
+
+    public void log(String text) {
+        resultTextField.appendText(text+"\n");
     }
 }
