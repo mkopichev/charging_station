@@ -1,8 +1,11 @@
 package org.charging_station.slcan;
 
+import org.charging_station.Charger;
 import org.charging_station.SlCanListener;
 import org.charging_station.serial.Serial;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class SlCan {
@@ -69,8 +72,8 @@ public class SlCan {
     public static String frameToSlcan(CanFrame frame) {
         String result = "";
 
-        result += "t";
-        result += String.format("%03X", frame.getId());
+        result += "T";
+        result += String.format("%08X", frame.getId());
         result += Integer.toString(frame.getDlc());
 
         for (int i : frame.getData()) {
@@ -83,7 +86,7 @@ public class SlCan {
     }
 
     public static void checkVersion(Serial serial, SlCanListener listener) {
-        Runnable runnable = () -> {
+        Thread thread = new Thread(() -> {
             serial.write("V\r");
             String version = serial.readLineBlocking(1000);
             if(version == null) {
@@ -92,8 +95,100 @@ public class SlCan {
             }
             listener.responseAcquired(SlCanListener.Request.VERSION_CHECK, "Версия преобразователя CAN - " + version);
 
-        };
-        runnable.run();
+        });
+        thread.start();
+    }
+
+    public static void sendCommand(Serial serial, SlCanListener listener, Charger.ChargerCommand command, int value, Charger.ChargerOperation operation) {
+        Thread thread = new Thread(() -> {
+            if(operation == Charger.ChargerOperation.WRITE && !(command == Charger.ChargerCommand.START ||
+                                                                command == Charger.ChargerCommand.STOP ||
+                                                                command == Charger.ChargerCommand.VOLTAGE_SETPOINT ||
+                                                                command == Charger.ChargerCommand.CURRENT_LIMIT ||
+                                                                command == Charger.ChargerCommand.GROUP_ADDRESS ||
+                                                                command == Charger.ChargerCommand.HI_LO_MODE_SET)) {
+                listener.errorHappened("Нельзя записать эти данные");
+                return;
+            }
+
+            if(operation == Charger.ChargerOperation.READ && (command == Charger.ChargerCommand.START ||
+                                                              command == Charger.ChargerCommand.STOP ||
+                                                              command == Charger.ChargerCommand.HI_LO_MODE_SET)) {
+                listener.errorHappened("Нельзя прочитать эти данные");
+                return;
+            }
+
+            CanFrame frame = new CanFrame();
+            frame.setDlc(8);
+            frame.setId(0x2200000); // Broadcast message
+
+            byte[] data = new byte[8];
+            switch (operation) {
+                case READ -> data[0] = 2;
+                case WRITE -> data[0] = 0;
+            }
+            data[1] = command.commandValue;
+            switch (command) {
+                case START -> data[7] = 0;
+                case STOP -> data[7] = 1;
+                case VOLTAGE_SETPOINT, CURRENT_LIMIT -> {
+                    ByteBuffer buffer = ByteBuffer.allocate(4);
+                    buffer.putInt(value);
+                    for(int i = 0; i < 4; i++) {
+                        data[4 + i] = buffer.get(i);
+                    }
+                }
+                case GROUP_ADDRESS, HI_LO_MODE_SET -> {
+                    listener.errorHappened("ХЗ что это за команда");
+                    return;
+                }
+
+            }
+            frame.setData(data);
+            String slCanString = frameToSlcan(frame);
+            serial.write(slCanString);
+            String response = serial.readLineBlocking(1000);
+            if(response == null) {
+                listener.errorHappened("Нет ответа от преобразователя в CAN");
+                return;
+            }
+
+            frame = slcanToFrame(response.getBytes(StandardCharsets.UTF_8));
+            if (frame == null) {
+                listener.errorHappened("Некорректный ответ");
+                return;
+            }
+
+            byte[] responseData = frame.getData();
+
+            if(responseData[1] != command.commandValue) {
+                listener.errorHappened("Некорректный ответ");
+                return;
+            }
+
+            if(command == Charger.ChargerCommand.START) {
+                listener.responseAcquired(SlCanListener.Request.START, "");
+                return;
+            }
+
+            if(command == Charger.ChargerCommand.STOP) {
+                listener.responseAcquired(SlCanListener.Request.STOP, "");
+                return;
+            }
+
+            if(operation == Charger.ChargerOperation.WRITE) {
+                listener.responseAcquired(SlCanListener.Request.COMMAND, "Должно быть записано");
+            }
+
+            StringBuilder responseString = new StringBuilder(command.toString() + " = ");
+            for(int i = 0; i < 4; i ++) {
+                responseString.append(String.format("%02X", responseData[4 + i] & 0xFF));
+            }
+
+            listener.responseAcquired(SlCanListener.Request.COMMAND, responseString.toString());
+
+        });
+        thread.start();
     }
 
 }

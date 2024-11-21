@@ -109,6 +109,11 @@ public class Serial {
     private int dataBits = 8;
     private String portName;
     private SerialPort port;
+
+    public SerialPortState getState() {
+        return state;
+    }
+
     private SerialPortState state = SerialPortState.DISCONNECTED;
 
     public void setParity(ParityOptions parity) {

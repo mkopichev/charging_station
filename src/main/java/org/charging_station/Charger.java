@@ -2,7 +2,7 @@ package org.charging_station;
 
 public class Charger {
 
-    public enum CHARGER_COMMANDS {
+    public enum ChargerCommand {
         VOLTAGE_OUTPUT(0),
         CURRENT_OUTPUT(1),
         VOLTAGE_SETPOINT(2),
@@ -22,13 +22,20 @@ public class Charger {
         VOLTAGE_OUTPUT_FAST(98),
         HI_LO_MODE_REALTIME_STATUS(101),
         OUTPUT_CURRENT_CAPABILITY(104),
-        OUTPUT_CURRENT_AND_CAPABILITY(114);
+        OUTPUT_CURRENT_AND_CAPABILITY(114),
+        START(4),
+        STOP(4);
 
-        public final int commandValue;
+        public final byte commandValue;
 
-        CHARGER_COMMANDS(int commandValue) {
-            this.commandValue = commandValue;
+        ChargerCommand(int commandValue) {
+            this.commandValue = (byte)commandValue;
         }
+    }
+
+    public enum ChargerOperation{
+        READ,
+        WRITE
     }
 
 

@@ -1,6 +1,5 @@
 package org.charging_station;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -29,7 +28,7 @@ public class MainController implements Initializable {
     private ComboBox<String> comPortChoice;
 
     @FXML
-    private ComboBox<Charger.CHARGER_COMMANDS> functionChoice;
+    private ComboBox<Charger.ChargerCommand> functionChoice;
 
     @FXML
     private TextField identifierValue;
@@ -58,7 +57,7 @@ public class MainController implements Initializable {
         readWriteChoice.getItems().addAll("Чтение", "Запись");
         readWriteChoice.getSelectionModel().select("Выберите");
 
-        functionChoice.getItems().addAll(Charger.CHARGER_COMMANDS.values());
+        functionChoice.getItems().addAll(Charger.ChargerCommand.values());
 
         comPortChoice.showingProperty().addListener((observableValue, wasShowing, isShowing) -> {
             if(isShowing) {
@@ -79,25 +78,35 @@ public class MainController implements Initializable {
                 reactor.disconnectPressed();
 
         });
+
+        startStopButton.setOnAction(actionEvent -> {
+            if(startStopButton.isSelected()) {
+                reactor.startPressed();
+                startStopButton.setSelected(false);
+            }
+            else {
+                reactor.stopPressed();
+                startStopButton.setSelected(true);
+            }
+        });
     }
 
-    boolean start = false;
 
-    @FXML
-    void onStartStopButtonPress(ActionEvent event) {
-
-        if (((ToggleButton) event.getSource()).getStyleClass().contains("start")) {
-            ((ToggleButton) event.getSource()).getStyleClass().remove("start");
-            ((ToggleButton) event.getSource()).getStyleClass().add("stop");
-            ((ToggleButton) event.getSource()).setText("Стоп");
-            resultTextField.appendText("Стоп\r\n");
-            start = true;
+    void startStateChanged(boolean state) {
+        if(state) {
+            startStopButton.getStyleClass().remove("stop");
+            startStopButton.getStyleClass().remove("start");
+            startStopButton.getStyleClass().add("stop");
+            startStopButton.setText("Стоп");
+            startStopButton.setSelected(true);
         } else {
-            ((ToggleButton) event.getSource()).getStyleClass().remove("stop");
-            ((ToggleButton) event.getSource()).getStyleClass().add("start");
-            resultTextField.appendText("Старт\r\n");
-            start = false;
+            startStopButton.getStyleClass().remove("stop");
+            startStopButton.getStyleClass().remove("start");
+            startStopButton.getStyleClass().add("start");
+            startStopButton.setText("Старт");
+            startStopButton.setSelected(false);
         }
+
     }
 
     public void log(String text) {

@@ -93,6 +93,27 @@ public class MainApplication extends Application implements SerialInterface, But
     }
 
     @Override
+    public void startPressed() {
+        if(serial.getState() == Serial.SerialPortState.DISCONNECTED) {
+            controller.log("Не подключен COM порт");
+            controller.startStateChanged(false);
+            return;
+        }
+        SlCan.sendCommand(serial, this, Charger.ChargerCommand.START, 0, Charger.ChargerOperation.WRITE);
+    }
+
+    @Override
+    public void stopPressed() {
+        if(serial.getState() == Serial.SerialPortState.DISCONNECTED) {
+            controller.log("Не подключен COM порт");
+            controller.startStateChanged(false);
+            return;
+        }
+        SlCan.sendCommand(serial, this, Charger.ChargerCommand.STOP, 1, Charger.ChargerOperation.WRITE);
+    }
+
+
+    @Override
     public ArrayList<String> comPortsExpanded() {
         return Serial.checkPorts(Serial.PORT_NAME_SHORT);
     }
@@ -101,11 +122,17 @@ public class MainApplication extends Application implements SerialInterface, But
     public void responseAcquired(Request request, String response) {
         switch (request) {
             case VERSION_CHECK -> controller.log(response);
-            case STOP -> controller.log("Источник остановлен");
-            case START -> controller.log("Источник запущен");
+            case COMMAND -> controller.log(response);
+            case START -> {
+                controller.log("Модуль включен");
+                controller.startStateChanged(true);
+            }
+            case STOP -> {
+                controller.log("Модуль выключен");
+                controller.startStateChanged(false);
+            }
+
         }
-
-
     }
 
     @Override
