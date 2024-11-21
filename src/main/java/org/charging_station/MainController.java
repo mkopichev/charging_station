@@ -31,7 +31,7 @@ public class MainController implements Initializable {
     private ComboBox<Charger.ChargerCommand> functionChoice;
 
     @FXML
-    private TextField identifierValue;
+    private Button functionExecuteButton;
 
     @FXML
     private ComboBox<String> readWriteChoice;
@@ -129,6 +129,11 @@ public class MainController implements Initializable {
             comConnectButton.setSelected(false);
             comPortChoice.setDisable(false);
         }
+
+    }
+
+    @FXML
+    void onFunctionExecuteButtonPress(ActionEvent event) {
 
     }
 }
