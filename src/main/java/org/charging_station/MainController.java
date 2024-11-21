@@ -34,7 +34,7 @@ public class MainController implements Initializable {
     private Button functionExecuteButton;
 
     @FXML
-    private ComboBox<String> readWriteChoice;
+    private ComboBox<Charger.ChargerOperation> readWriteChoice;
 
     @FXML
     private TextArea resultTextField;
@@ -50,12 +50,13 @@ public class MainController implements Initializable {
     }
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         readWriteChoice.getItems().removeAll(readWriteChoice.getItems());
-        readWriteChoice.getItems().addAll("Чтение", "Запись");
-        readWriteChoice.getSelectionModel().select("Выберите");
+        readWriteChoice.getItems().addAll(Charger.ChargerOperation.values());
+        readWriteChoice.getSelectionModel().select(0);
 
         functionChoice.getItems().addAll(Charger.ChargerCommand.values());
 
@@ -87,6 +88,29 @@ public class MainController implements Initializable {
             else {
                 reactor.stopPressed();
                 startStopButton.setSelected(true);
+            }
+        });
+
+        functionExecuteButton.setOnAction(actionEvent -> {
+            if(functionChoice.getValue() == null) {
+                log("Не выбрана комманда");
+                return;
+            }
+            Integer argument = 0;
+            if(readWriteChoice.getValue() == Charger.ChargerOperation.WRITE) {
+                try {
+                    argument = Integer.parseInt(argumentValue.getText());
+                } catch (NumberFormatException e) {
+                    log("Недопустимое значение аргумента");
+                    return;
+                }
+                reactor.commandButtonPressed(functionChoice.getValue(), Charger.ChargerOperation.WRITE, argument);
+                return;
+            }
+
+            if(readWriteChoice.getValue() == Charger.ChargerOperation.READ) {
+                reactor.commandButtonPressed(functionChoice.getValue(), Charger.ChargerOperation.READ, 0);
+                return;
             }
         });
     }
@@ -132,8 +156,4 @@ public class MainController implements Initializable {
 
     }
 
-    @FXML
-    void onFunctionExecuteButtonPress(ActionEvent event) {
-
-    }
 }

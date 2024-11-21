@@ -112,6 +112,15 @@ public class MainApplication extends Application implements SerialInterface, But
         SlCan.sendCommand(serial, this, Charger.ChargerCommand.STOP, 1, Charger.ChargerOperation.WRITE);
     }
 
+    @Override
+    public void commandButtonPressed(Charger.ChargerCommand command, Charger.ChargerOperation operation, int argument) {
+        if(serial.getState() == Serial.SerialPortState.DISCONNECTED) {
+            controller.log("Не подключен COM порт");
+            return;
+        }
+        SlCan.sendCommand(serial, this, command, argument, operation);
+    }
+
 
     @Override
     public ArrayList<String> comPortsExpanded() {

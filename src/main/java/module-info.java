@@ -3,6 +3,7 @@ module org.acs.charging_station {
     requires javafx.fxml;
     requires java.management;
     requires com.fazecast.jSerialComm;
+    requires java.desktop;
 
 
     opens org.charging_station to javafx.fxml;
