@@ -61,12 +61,12 @@ public class MainController implements Initializable {
         functionChoice.getItems().addAll(Charger.ChargerCommand.values());
 
         comPortChoice.showingProperty().addListener((observableValue, wasShowing, isShowing) -> {
-            if(isShowing) {
+            if (isShowing) {
                 ArrayList<String> vals = reactor.comPortsExpanded();
                 String oldVal = comPortChoice.getValue();
                 comPortChoice.getItems().clear();
                 comPortChoice.getItems().addAll(vals);
-                if(oldVal != null && vals.contains(oldVal)) {
+                if (oldVal != null && vals.contains(oldVal)) {
                     comPortChoice.getSelectionModel().select(oldVal);
                 }
             }
