@@ -157,7 +157,7 @@
                                     <Insets />
                                  </opaqueInsets>
                               </ComboBox>
-                              <ToggleButton fx:id="comConnectButton" minWidth="250.0" mnemonicParsing="false" onAction="#onComConnectButtonPress" styleClass="stop" stylesheets="@MyButtonStyle.css" text="Не подключено" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ToggleButton fx:id="comConnectButton" minWidth="250.0" mnemonicParsing="false" styleClass="stop" stylesheets="@MyButtonStyle.css" text="Не подключено" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
                      </children>

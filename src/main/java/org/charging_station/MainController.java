@@ -73,7 +73,10 @@ public class MainController implements Initializable {
         });
 
         comConnectButton.setOnAction(actionEvent -> {
-            reactor.connectPressed(comPortChoice.getValue());
+            if(comConnectButton.isSelected())
+                reactor.connectPressed(comPortChoice.getValue());
+            else
+                reactor.disconnectPressed();
 
         });
     }
@@ -102,21 +105,22 @@ public class MainController implements Initializable {
     }
     boolean connect = false;
 
-    @FXML
-    void onComConnectButtonPress(ActionEvent event) {
-
-        if (((ToggleButton) event.getSource()).getStyleClass().contains("start")) {
-            ((ToggleButton) event.getSource()).getStyleClass().remove("start");
-            ((ToggleButton) event.getSource()).getStyleClass().add("stop");
-            ((ToggleButton) event.getSource()).setText("Не подключено");
-            resultTextField.appendText("Не подключеное\r\n");
-            connect = true;
+    void comChangedState(boolean state) {
+        if(state) {
+            comConnectButton.getStyleClass().remove("stop");
+            comConnectButton.getStyleClass().remove("start");
+            comConnectButton.getStyleClass().add("start");
+            comConnectButton.setText("Подключено");
+            comConnectButton.setSelected(true);
+            comPortChoice.setDisable(true);
         } else {
-            ((ToggleButton) event.getSource()).getStyleClass().remove("stop");
-            ((ToggleButton) event.getSource()).getStyleClass().add("start");
-            ((ToggleButton) event.getSource()).setText("Подключено");
-            resultTextField.appendText("Подключено\r\n");
-            connect = false;
+            comConnectButton.getStyleClass().remove("stop");
+            comConnectButton.getStyleClass().remove("start");
+            comConnectButton.getStyleClass().add("stop");
+            comConnectButton.setText("Не подключено");
+            comConnectButton.setSelected(false);
+            comPortChoice.setDisable(false);
         }
+
     }
 }

@@ -165,6 +165,13 @@ public class Serial {
         return -1;
     }
 
+    public void disconnect() {
+        if(state == SerialPortState.CONNECTED) {
+            port.closePort();
+            state = SerialPortState.DISCONNECTED;
+        }
+    }
+
     public int write(String data) {
         if(state != SerialPortState.CONNECTED)
             return -1;

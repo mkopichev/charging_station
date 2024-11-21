@@ -62,6 +62,7 @@ public class MainApplication extends Application implements SerialInterface, But
 
         if(com == null) {
             controller.log("Выберите COM-порт");
+            controller.comChangedState(false);
             return;
         }
         serial.setPortName(com);
@@ -70,8 +71,10 @@ public class MainApplication extends Application implements SerialInterface, But
         serial.setStopBits(Serial.StopBitsOptions.ONE_STOP_BIT);
         if(serial.connect() != 0) {
             controller.log("Ошибка подключения COM");
+            controller.comChangedState(false);
             return;
         }
+        controller.comChangedState(true);
         controller.log("Подключение к порту " + SerialPort.getCommPort(com).getDescriptivePortName() + " успешно");
 
         serial.write("C\r");
@@ -80,6 +83,13 @@ public class MainApplication extends Application implements SerialInterface, But
 
         SlCan.checkVersion(serial, this);
 
+    }
+
+    @Override
+    public void disconnectPressed() {
+        serial.disconnect();
+        controller.comChangedState(false);
+        controller.log("COM порт отключен");
     }
 
     @Override
