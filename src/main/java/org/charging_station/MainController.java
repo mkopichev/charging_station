@@ -7,6 +7,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -134,7 +138,8 @@ public class MainController implements Initializable {
     }
 
     public void log(String text) {
-        resultTextField.appendText(text + "\n");
+        String time = ZonedDateTime.now(ZoneId.ofOffset( "GMT", ZoneOffset.ofHours(3))).format(DateTimeFormatter.ofPattern( "HH.mm.ss" ));
+        resultTextField.appendText(time + "\t" + text + "\n");
     }
 
     void comChangedState(boolean state) {

@@ -1,4 +1,4 @@
-module org.acs.charging_station {
+module org.charging_station {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.management;
